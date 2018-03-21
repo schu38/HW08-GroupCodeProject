@@ -3,9 +3,6 @@
 int LightPin = A0;
 int sensorValue = 0;
 Servo myservo;  // create servo object to control a servo
-// twelve servo objects can be created on most boards
-
-//make four new servos
 Servo myservo2;
 Servo myservo3;
 Servo myservo4;
@@ -16,24 +13,24 @@ void setup() {
   pinMode(LightPin, INPUT);
   Serial.begin(9600); // how often to return values to the serial monitor
   
-  myservo.attach(5);  // attaches the servo on pin 9 to the servo object
+  myservo.attach(5);  
   myservo2.attach(9);
-  myservo3.attach(6);  // attaches the servo on pin 6 to the servo object 3
+  myservo3.attach(6);  
   myservo4.attach(10);
 
- myservo.write(25);  // attaches the servo on pin 9 to the servo object
-  myservo2.write(25);
-   myservo3.write(25);
-   myservo4.write(25);
+  myservo.write(100);  
+  myservo2.write(100);
+  myservo3.write(25);
+  myservo4.write(25);
   
 }
 
 void loop() {
 
-  sensorValue = analogread(LightPin);
+  sensorValue = analogRead(LightPin);
   Serial.println(sensorValue);
   
-  for (pos = 25; pos <= 135; pos += 5) { // goes from 45 degrees to 135 degrees
+  for (pos = 50; pos <= 135; pos += 5) { // goes from 45 degrees to 135 degrees
     // in steps of 1 degree
     myservo.write(pos);
     myservo2.write(pos);
@@ -65,6 +62,19 @@ void loop() {
     delay(30);
     }
 
+  if (sensorValue > 650) {
+    for (pos = 135; pos >= 25; pos -=5) {
+      myservo.write(pos);
+      myservo2.write(pos);
+      delay(15);
+    }
+
+    for (pos = 25; pos <= 135; pos +=5) {
+      myservo3.write(pos);
+      myservo4.write(pos);
+      delay(15);
+    }
+  }
     /*
    for (pos = 135; pos >= 25; pos -= 1) { // goes from 135 degrees to 45 degrees
     myservo.write(pos);
