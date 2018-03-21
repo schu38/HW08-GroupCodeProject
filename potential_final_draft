@@ -1,0 +1,118 @@
+#include <Servo.h>
+
+int LightPin = A0;
+int sensorValue = 0;
+Servo myservo5;  // create servo object to control a servo
+Servo myservo9;
+Servo myservo6;
+Servo myservo10;
+
+int ledPin1 = 11;
+int ledPin2 = 12;
+int ledPin3 = 13;
+
+
+int pos = 0;    // variable to store the servo position
+
+void setup() {
+  pinMode(LightPin, INPUT);
+  Serial.begin(9600); // how often to return values to the serial monitor
+  
+  myservo5.attach(5);           //left legs
+  myservo9.attach(9);
+  myservo6.attach(6);           //right legs
+  myservo10.attach(10);
+
+  myservo5.write(100);  
+  myservo9.write(100);
+  myservo6.write(25);
+  myservo10.write(25);
+
+  /*set up the LED light pins*/
+  pinMode(ledPin1, OUTPUT);
+  pinMode(ledPin2, OUTPUT);
+  pinMode(ledPin3, OUTPUT);
+  /*
+  pinMode(ledPin4, OUTPUT);
+  pinMode(ledPin5, OUTPUT);
+  */
+}
+
+void loop() {
+
+  sensorValue = analogRead(LightPin);
+  Serial.println(sensorValue);
+
+  if (sensorValue >= 1000) {
+     digitalWrite(ledPin1, HIGH);
+     digitalWrite(ledPin2, HIGH);
+     delay(100);
+     digitalWrite(ledPin1, LOW);
+     digitalWrite(ledPin2, LOW);
+  }
+
+  else if (sensorValue >= 750 && sensorValue < 1000) {
+     digitalWrite(ledPin2, HIGH);
+     delay(100);
+     digitalWrite(ledPin2, LOW);
+  }
+
+  else if (sensorValue >= 500 && sensorValue < 750) {
+     digitalWrite(ledPin3, HIGH);
+     delay(100);
+  }
+
+  else if (sensorValue >= 250 && sensorValue < 500) {
+     digitalWrite(ledPin1, HIGH);
+     delay(400);
+     digitalWrite(ledPin1, LOW);
+  }
+
+  else {
+     digitalWrite(ledPin1, HIGH);
+     digitalWrite(ledPin2, HIGH);
+     digitalWrite(ledPin3, HIGH);
+     delay(100);
+     digitalWrite(ledPin1, LOW);
+     digitalWrite(ledPin2, LOW);
+     digitalWrite(ledPin3, LOW);
+  }
+  
+  for (pos = 50; pos <= 135; pos += 1) { // goes from 45 degrees to 135 degrees
+    myservo5.write(pos);
+    myservo9.write(pos);
+  }
+  
+  for (pos = 135; pos >= 50; pos -= 1) { // goes from 45 degrees to 135 degrees
+    myservo10.write(pos);
+    myservo6.write(pos);  
+  }
+  
+  for (pos = 50; pos <= 135; pos += 1) { // goes from 135 degrees to 45 degre
+    myservo10.write(pos); 
+    myservo6.write(pos); 
+    delay(30);
+    }
+    
+  for (pos = 135; pos >= 25; pos -= 1) { // goes from 135 degrees to 45 degrees
+    myservo5.write(pos);
+    myservo9.write(pos); 
+    delay(30);
+    }
+
+  
+  /*if (sensorValue > 650) {
+    for (pos = 135; pos >= 25; pos -=1) {
+      myservo5.write(pos);
+      myservo9.write(pos);
+      delay(15);
+    }
+
+    for (pos = 25; pos <= 135; pos +=1) {
+      myservo6.write(pos);
+      myservo10.write(pos);
+      delay(15);
+    }
+  
+  */
+}
