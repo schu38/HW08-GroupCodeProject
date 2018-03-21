@@ -7,9 +7,9 @@ Servo myservo9;
 Servo myservo6;
 Servo myservo10;
 
-int ledPin1 = 11;
-int ledPin2 = 12;
-int ledPin3 = 13;
+int ledPinR = 11;
+int ledPinY = 12;
+int ledPinG = 13;
 
 
 int pos = 0;    // variable to store the servo position
@@ -29,9 +29,9 @@ void setup() {
   myservo10.write(25);
 
   /*set up the LED light pins*/
-  pinMode(ledPin1, OUTPUT);
-  pinMode(ledPin2, OUTPUT);
-  pinMode(ledPin3, OUTPUT);
+  pinMode(ledPinR, OUTPUT);
+  pinMode(ledPinY, OUTPUT);
+  pinMode(ledPinG, OUTPUT);
   /*
   pinMode(ledPin4, OUTPUT);
   pinMode(ledPin5, OUTPUT);
@@ -44,38 +44,38 @@ void loop() {
   Serial.println(sensorValue);
 
   if (sensorValue >= 1000) {
-     digitalWrite(ledPin1, HIGH);
-     digitalWrite(ledPin2, HIGH);
+     digitalWrite(ledPinR, HIGH);
+     digitalWrite(ledPinY, HIGH);
      delay(100);
-     digitalWrite(ledPin1, LOW);
-     digitalWrite(ledPin2, LOW);
+     digitalWrite(ledPinR, LOW);
+     digitalWrite(ledPinY, LOW);
   }
 
   else if (sensorValue >= 750 && sensorValue < 1000) {
-     digitalWrite(ledPin2, HIGH);
+     digitalWrite(ledPinY, HIGH);
      delay(100);
-     digitalWrite(ledPin2, LOW);
+     digitalWrite(ledPinY, LOW);
   }
 
   else if (sensorValue >= 500 && sensorValue < 750) {
-     digitalWrite(ledPin3, HIGH);
-     delay(100);
+     digitalWrite(ledPinR, HIGH);
+     digitalWrite(ledPinY, HIGH);
+     digitalWrite(ledPinG, HIGH);
+     delay(1000);
+     digitalWrite(ledPinR, LOW);
+     digitalWrite(ledPinY, LOW);
+     digitalWrite(ledPinG, LOW);
   }
 
   else if (sensorValue >= 250 && sensorValue < 500) {
-     digitalWrite(ledPin1, HIGH);
+     digitalWrite(ledPinR, HIGH);
      delay(400);
-     digitalWrite(ledPin1, LOW);
+     digitalWrite(ledPinR, LOW);
   }
 
   else {
-     digitalWrite(ledPin1, HIGH);
-     digitalWrite(ledPin2, HIGH);
-     digitalWrite(ledPin3, HIGH);
+     digitalWrite(ledPinG, HIGH);
      delay(100);
-     digitalWrite(ledPin1, LOW);
-     digitalWrite(ledPin2, LOW);
-     digitalWrite(ledPin3, LOW);
   }
   
   for (pos = 50; pos <= 135; pos += 1) { // goes from 45 degrees to 135 degrees
